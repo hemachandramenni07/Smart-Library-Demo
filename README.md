@@ -7,7 +7,7 @@
 <h1 align="center">⚡ Smart Library</h1>
 
 <p align="center">
-  <b>A completed Smart Library prototype built around a single ESP32-S3 board.</b>
+  <b>A completed Smart library prototype built around a single ESP32-S3 board.</b>
 </p>
 
 <p align="center">
