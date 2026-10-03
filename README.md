@@ -723,50 +723,70 @@ pio run --target upload
 
 ---
 
-# 👥 18. Team Development
+# 👥 Team & Contributions
 
-The repository is maintained collaboratively using Git branches.
+This project was developed collaboratively by our team.  
+Rather than dividing the project into fixed individual roles, **all team members contributed across the different stages of the project**, including ideation, hardware, software, testing, debugging, documentation and final integration.
 
-```mermaid
-gitGraph
-    commit id: "Initial Prototype"
-    branch feature/esp32
-    checkout feature/esp32
-    commit id: "ESP32-S3 Updates"
-    checkout main
-    merge feature/esp32
+## 🤝 Equal Contribution
+
+```text
+                    📚 SMART LIBRARY
+                          │
+             ┌────────────┼────────────┐
+             │            │            │
+             ▼            ▼            ▼
+          💡 IDEATION   🔧 HARDWARE   💻 SOFTWARE
+             │            │            │
+             └────────────┼────────────┘
+                          │
+                          ▼
+                    🧪 TESTING
+                          │
+                          ▼
+                    🐛 DEBUGGING
+                          │
+                          ▼
+                    📖 DOCUMENTATION
+                          │
+                          ▼
+                    🚀 FINAL DEMO
 ```
 
-### Recommended workflow
+Every member participated in multiple stages of the development process, and the final prototype represents the **combined work and ideas of the entire team**.
 
-```bash
-git checkout main
-git pull origin main
-git checkout -b feature/your-feature
-```
+## 👨‍👩‍👧‍👦 Our Team
 
-After changes:
+| Team Member |
+|:---:|
+| **Hema** |
+| **Nisha** |
+| **Srujitha** |
+| **Yasaswini** |
 
-```bash
-git add .
-git commit -m "Describe your changes"
-git push -u origin feature/your-feature
-```
+## 🛠️ Areas of Collective Contribution
 
-Then create a Pull Request and merge it into `main` after review.
-
----
-
-# 👨‍👩‍👧‍👦 19. Team
-
-| Member | Main Area |
+| Area | Team Contribution |
 |---|---|
-| **Hema** | ESP32-S3 integration & project coordination |
-| **Nisha** | RFID / identification |
-| **Srujitha** | Hardware & visual feedback |
-| **Yasaswini** | Integration / documentation |
+| 💡 **Ideation** | Developing and refining the Smart Library concept |
+| 🧩 **System Design** | Planning the ESP32-S3-centric architecture |
+| 🔧 **Hardware** | Circuit design, component integration and testing |
+| 💻 **Software** | Firmware development and system logic |
+| 📡 **RFID** | Identification and transaction workflow |
+| 🖥️ **User Interface** | Designing and testing the interaction flow |
+| 🧪 **Testing** | Testing the complete prototype and individual functions |
+| 🐛 **Debugging** | Identifying and resolving hardware/software issues |
+| 📖 **Documentation** | README, diagrams, project documentation and presentation |
+| 🚀 **Integration** | Combining all modules into the final working prototype |
 
----
+> **🤝 Built together, tested together, and demonstrated together.**
+
+## 🌟 Team Philosophy
+
+> **No single member owns a single module — the project is a collective effort.**
+
+Each team member contributed ideas, implementation, testing and problem-solving throughout the development of the prototype.
+
 
 # 🏆 20. Project Status
 
