@@ -759,10 +759,10 @@ Every member participated in multiple stages of the development process, and the
 
 | Team Member |
 |:---:|
-| **Hema** |
+| **HemaChandra** |
+| **Yasaswini** |
 | **Nisha** |
 | **Srujitha** |
-| **Yasaswini** |
 
 ## 🛠️ Areas of Collective Contribution
 
