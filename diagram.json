@@ -1,0 +1,639 @@
+{
+  "version": 1,
+  "author": "FIND MY BOOK - Smart Library (combined)",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-s3-devkitc-1",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "board-ili9341-cap-touch",
+      "id": "lcd1",
+      "top": -60,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_lcd",
+      "top": -95,
+      "left": -330,
+      "attrs": {
+        "text": "Touch kiosk (ILI9341 + FT6206)"
+      }
+    },
+    {
+      "type": "board-mfrc522",
+      "id": "rfid1",
+      "top": -150,
+      "left": 300,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_rfid1",
+      "top": -180,
+      "left": 300,
+      "attrs": {
+        "text": "DESK reader - issue / return"
+      }
+    },
+    {
+      "type": "board-mfrc522",
+      "id": "rfid2",
+      "top": 60,
+      "left": 300,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_rfid2",
+      "top": 30,
+      "left": 300,
+      "attrs": {
+        "text": "DOOR reader - anti-theft gate"
+      }
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled",
+      "top": 330,
+      "left": -20,
+      "attrs": {
+        "i2cAddress": "0x3c"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_oled",
+      "top": 300,
+      "left": -60,
+      "attrs": {
+        "text": "Shelf status OLED"
+      }
+    },
+    {
+      "type": "wokwi-led-strip",
+      "id": "strip1",
+      "top": -150,
+      "left": -20,
+      "attrs": {
+        "pixels": "8"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_strip",
+      "top": -180,
+      "left": -20,
+      "attrs": {
+        "text": "Gate status light"
+      }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": 300,
+      "left": 560,
+      "attrs": {
+        "volume": "0.1"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 420,
+      "left": 560,
+      "attrs": {
+        "color": "red",
+        "label": "ARM"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_btn",
+      "top": 400,
+      "left": 560,
+      "attrs": {
+        "text": "ARM = night mode"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_sw",
+      "top": 270,
+      "left": -330,
+      "attrs": {
+        "text": "Shelf sensors (LEFT = book on shelf)"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw1",
+      "top": 300,
+      "left": -300,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_sw1",
+      "top": 305,
+      "left": -240,
+      "attrs": {
+        "text": "Maths A1"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw2",
+      "top": 360,
+      "left": -300,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_sw2",
+      "top": 365,
+      "left": -240,
+      "attrs": {
+        "text": "Physics A2"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw3",
+      "top": 420,
+      "left": -300,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_sw3",
+      "top": 425,
+      "left": -240,
+      "attrs": {
+        "text": "History B1"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw4",
+      "top": 480,
+      "left": -300,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_sw4",
+      "top": 485,
+      "left": -240,
+      "attrs": {
+        "text": "C Prog B2"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "t_led",
+      "top": 250,
+      "left": 300,
+      "attrs": {
+        "text": "Shelf navigation LEDs"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 280,
+      "left": 320,
+      "attrs": {
+        "color": "green",
+        "label": "A1"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 370,
+      "left": 305,
+      "attrs": {
+        "value": "220"
+      },
+      "rotate": 90
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": 280,
+      "left": 380,
+      "attrs": {
+        "color": "green",
+        "label": "A2"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 370,
+      "left": 365,
+      "attrs": {
+        "value": "220"
+      },
+      "rotate": 90
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led3",
+      "top": 280,
+      "left": 440,
+      "attrs": {
+        "color": "blue",
+        "label": "B1"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": 370,
+      "left": 425,
+      "attrs": {
+        "value": "220"
+      },
+      "rotate": 90
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led4",
+      "top": 280,
+      "left": 500,
+      "attrs": {
+        "color": "blue",
+        "label": "B2"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r4",
+      "top": 370,
+      "left": 485,
+      "attrs": {
+        "value": "220"
+      },
+      "rotate": 90
+    }
+  ],
+  "connections": [
+    [
+      "esp:4",
+      "sw1:2",
+      "green",
+      []
+    ],
+    [
+      "sw1:1",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "esp:5",
+      "sw2:2",
+      "green",
+      []
+    ],
+    [
+      "sw2:1",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "esp:15",
+      "sw3:2",
+      "green",
+      []
+    ],
+    [
+      "sw3:1",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "esp:16",
+      "sw4:2",
+      "green",
+      []
+    ],
+    [
+      "sw4:1",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "esp:17",
+      "r1:1",
+      "green",
+      []
+    ],
+    [
+      "r1:2",
+      "led1:A",
+      "green",
+      []
+    ],
+    [
+      "led1:C",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:18",
+      "r2:1",
+      "green",
+      []
+    ],
+    [
+      "r2:2",
+      "led2:A",
+      "green",
+      []
+    ],
+    [
+      "led2:C",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:38",
+      "r3:1",
+      "blue",
+      []
+    ],
+    [
+      "r3:2",
+      "led3:A",
+      "blue",
+      []
+    ],
+    [
+      "led3:C",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:39",
+      "r4:1",
+      "blue",
+      []
+    ],
+    [
+      "r4:2",
+      "led4:A",
+      "blue",
+      []
+    ],
+    [
+      "led4:C",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "lcd1:VCC",
+      "esp:3V3.1",
+      "red",
+      []
+    ],
+    [
+      "lcd1:GND",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "lcd1:CS",
+      "esp:10",
+      "orange",
+      []
+    ],
+    [
+      "lcd1:RST",
+      "esp:9",
+      "gray",
+      []
+    ],
+    [
+      "lcd1:D/C",
+      "esp:8",
+      "violet",
+      []
+    ],
+    [
+      "lcd1:MOSI",
+      "esp:11",
+      "blue",
+      []
+    ],
+    [
+      "lcd1:SCK",
+      "esp:12",
+      "yellow",
+      []
+    ],
+    [
+      "lcd1:LED",
+      "esp:3V3.2",
+      "red",
+      []
+    ],
+    [
+      "lcd1:MISO",
+      "esp:13",
+      "cyan",
+      []
+    ],
+    [
+      "lcd1:SCL",
+      "esp:7",
+      "purple",
+      []
+    ],
+    [
+      "lcd1:SDA",
+      "esp:6",
+      "magenta",
+      []
+    ],
+    [
+      "rfid1:SDA",
+      "esp:14",
+      "orange",
+      []
+    ],
+    [
+      "rfid1:SCK",
+      "esp:12",
+      "yellow",
+      []
+    ],
+    [
+      "rfid1:MOSI",
+      "esp:11",
+      "blue",
+      []
+    ],
+    [
+      "rfid1:MISO",
+      "esp:13",
+      "cyan",
+      []
+    ],
+    [
+      "rfid1:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "rfid1:RST",
+      "esp:21",
+      "gray",
+      []
+    ],
+    [
+      "rfid1:3.3V",
+      "esp:3V3.1",
+      "red",
+      []
+    ],
+    [
+      "rfid2:SDA",
+      "esp:47",
+      "orange",
+      []
+    ],
+    [
+      "rfid2:SCK",
+      "esp:12",
+      "yellow",
+      []
+    ],
+    [
+      "rfid2:MOSI",
+      "esp:11",
+      "blue",
+      []
+    ],
+    [
+      "rfid2:MISO",
+      "esp:13",
+      "cyan",
+      []
+    ],
+    [
+      "rfid2:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "rfid2:RST",
+      "esp:21",
+      "gray",
+      []
+    ],
+    [
+      "rfid2:3.3V",
+      "esp:3V3.1",
+      "red",
+      []
+    ],
+    [
+      "oled:SDA",
+      "esp:6",
+      "magenta",
+      []
+    ],
+    [
+      "oled:SCL",
+      "esp:7",
+      "purple",
+      []
+    ],
+    [
+      "oled:VCC",
+      "esp:3V3.2",
+      "red",
+      []
+    ],
+    [
+      "oled:GND",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "esp:42",
+      "strip1:DIN",
+      "green",
+      []
+    ],
+    [
+      "strip1:VDD",
+      "esp:5V",
+      "red",
+      []
+    ],
+    [
+      "strip1:VSS",
+      "esp:GND.4",
+      "black",
+      []
+    ],
+    [
+      "esp:40",
+      "bz1:2",
+      "gold",
+      []
+    ],
+    [
+      "bz1:1",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:41",
+      "btn1:1.l",
+      "red",
+      []
+    ],
+    [
+      "btn1:2.l",
+      "esp:GND.4",
+      "black",
+      []
+    ]
+  ],
+  "dependencies": {}
+}

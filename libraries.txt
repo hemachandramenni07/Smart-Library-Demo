@@ -1,0 +1,7 @@
+# Only needed if you paste the project into wokwi.com instead of using PlatformIO
+Adafruit GFX Library
+Adafruit ILI9341
+Adafruit FT6206 Library
+Adafruit SSD1306
+Adafruit NeoPixel
+MFRC522
