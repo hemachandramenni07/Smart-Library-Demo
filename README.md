@@ -1,304 +1,483 @@
-# 📚 Smart Library — ESP32-S3
+# 📚 Smart Library — ESP32-S3 Based Smart Library Prototype
 
 <p align="center">
-  <img src="photos_circuit/FindBook_demo.png" alt="Smart Library Demo" width="720">
+  <img src="photos_circuit/FindBook_demo.png" alt="Smart Library Prototype" width="760">
+</p>
+
+<h3 align="center">🔎 Find • 📖 Issue • ↩️ Return • 🔐 Identify • 💡 Guide</h3>
+
+<p align="center">
+  A completed Smart Library prototype built around <b>one ESP32-S3 board</b>.
 </p>
 
 <p align="center">
-  <b>A compact Smart Library concept reimagined around a single ESP32-S3 board.</b><br>
-  Find books faster • Guide users visually • Simplify issue/return • Explore smarter library interaction
-</p>
-
-<p align="center">
-
-![Platform](https://img.shields.io/badge/Platform-ESP32--S3-00A98F?style=for-the-badge&logo=espressif)
-![Framework](https://img.shields.io/badge/Framework-PlatformIO-FF6B35?style=for-the-badge&logo=platformio)
-![Language](https://img.shields.io/badge/Language-C%2FC%2B%2B-00599C?style=for-the-badge&logo=cplusplus)
-![Status](https://img.shields.io/badge/Status-Prototype-7C3AED?style=for-the-badge)
-
+  <img src="https://img.shields.io/badge/ESP32--S3-Core-0F766E?style=for-the-badge&logo=espressif">
+  <img src="https://img.shields.io/badge/PlatformIO-Development-F58220?style=for-the-badge&logo=platformio">
+  <img src="https://img.shields.io/badge/C%2FC%2B%2B-Firmware-00599C?style=for-the-badge&logo=cplusplus">
+  <img src="https://img.shields.io/badge/Prototype-Completed-16A34A?style=for-the-badge">
 </p>
 
 ---
 
-## ✨ What is this?
+## 🌟 About the Project
 
-**Smart Library** is an ESP32-S3-based library assistance concept created to address a simple problem:
+Finding a book in a large library can be surprisingly difficult.
 
-> **A book may be available in a library, but finding its exact physical location can still take time.**
+A digital catalogue may tell us that a book is **available**, but it does not always answer the question a student actually has:
 
-The project was **inspired by the smart-library problem and ideas presented in a reference article/document**, but the approach here is our own redesign. Instead of building a system around several controller boards, our goal is to explore how much of the interaction and intelligence can be brought together around **one ESP32-S3 board**.
+> **“Where exactly is the book?”**
 
-The result is a compact, student-built prototype focused on making the library experience more interactive, guided and easier to use.
+This project explores that problem through a compact embedded-system prototype.
+
+Our team was **inspired by the smart-library concept presented in a reference article/document**, but we did not reproduce its architecture. We took the underlying problem and re-thought the implementation from our own perspective.
+
+### 💡 Our central idea
+
+Instead of building the prototype around multiple controller boards, we explored a **single ESP32-S3 based approach** where the board acts as the central platform for the user interface, interaction logic and connected library functions.
+
+```text
+                    📚 SMART LIBRARY
+                          │
+                          ▼
+                  ┌───────────────┐
+                  │   ESP32-S3    │
+                  │ Central Board │
+                  └───────┬───────┘
+                          │
+          ┌───────────────┼───────────────┐
+          │               │               │
+          ▼               ▼               ▼
+      🔎 FIND          📖 ISSUE         ↩️ RETURN
+      BOOK             BOOK             BOOK
+          │               │               │
+          └───────────────┼───────────────┘
+                          ▼
+                  📡 IDENTIFICATION
+                          │
+                          ▼
+                  💡 VISUAL FEEDBACK
+```
+
+The goal is simple:
+
+> **Make the physical library experience more interactive without making the hardware architecture unnecessarily complicated.**
 
 ---
 
-## 💡 From Inspiration → Our Idea
+# 💭 From Inspiration to Our Implementation
 
-The reference concept describes a smart library that combines book discovery, RFID-based transactions, shelf guidance and security.
+The reference smart-library concept describes a broader system for book search, RFID-based transactions, shelf guidance and security. fileciteturn1file0L5-L12
 
-We took the **problem**, not the implementation, and asked:
+We used that **problem space as inspiration**, then asked a different engineering question:
 
-> **"Can we rethink the same library experience around a single ESP32-S3?"**
+### “How can we build our own working library prototype around a single ESP32-S3?”
 
-### Reference idea
+That led us to focus on:
 
-```text
-Library problem
-      ↓
-Book search + identification
-      ↓
-Shelf navigation
-      ↓
-Issue / Return
-      ↓
-Security
-```
+- A central ESP32-S3 controller
+- An interactive user interface
+- Book identification
+- Find-book interaction
+- Issue and return workflows
+- Visual status indication
+- A compact physical demonstration
 
-### Our direction
-
-```text
-                 ┌─────────────────────┐
-                 │      ESP32-S3       │
-                 │   Central Control   │
-                 └──────────┬──────────┘
-                            │
-          ┌─────────────────┼─────────────────┐
-          ↓                 ↓                 ↓
-     📚 Book Search     🔐 RFID Flow      💡 Guidance
-          │                 │                 │
-          └─────────────────┼─────────────────┘
-                            ↓
-                     🏛️ Smart Library
-```
-
-The important difference is the **architecture philosophy**: fewer controller boards, a compact central design, and an ESP32-S3 at the heart of the experience.
+The reference concept itself discusses the difficulty of locating books in large racks and the need for better inventory and transaction workflows. fileciteturn1file0L15-L26
 
 ---
 
-## 🎯 Problem We Are Solving
+# 🎯 The Problem
 
-Traditional library systems can tell a student that a book is available without making the physical location immediately obvious.
+Imagine a student enters a library.
 
-That creates a familiar situation:
+They know:
 
 ```text
-"Book available" ✅
-       ↓
-"Where is it?" 🤔
-       ↓
-Walk through shelves 🔎
-       ↓
-Check rows manually 😓
-       ↓
-Finally find the book 📚
+📚 Book: Mathematics
+✅ Availability: Available
 ```
 
-Our idea is to shorten that journey:
+But they still have to search through:
 
 ```text
-Search
-  ↓
-Identify
-  ↓
-Guide
-  ↓
-Find
+Rack A
+ ├── Row 1
+ ├── Row 2
+ ├── Row 3
+ └── Row 4
+
+Rack B
+ ├── Row 1
+ ├── Row 2
+ ├── Row 3
+ └── Row 4
+```
+
+That creates unnecessary searching.
+
+Our prototype explores a more interactive flow:
+
+```text
+             USER
+               │
+               ▼
+        🔎 Search / Select
+               │
+               ▼
+        📚 Identify Book
+               │
+               ▼
+       📍 Locate / Indicate
+               │
+               ▼
+        📖 Issue / Return
+               │
+               ▼
+         ✅ Confirmation
 ```
 
 ---
 
-## 🚀 Core Concept
+# 🧠 System Concept
 
-The ESP32-S3 acts as the central controller for the prototype.
+The ESP32-S3 is the **central board** of the prototype.
 
-The interaction is designed around four primary experiences:
+It brings the interaction into one embedded platform rather than distributing the core experience across several independent controllers.
 
-| Feature | Purpose |
+### Core responsibilities
+
+| Function | What the prototype demonstrates |
 |---|---|
-| 🔎 **Find Book** | Help the user locate a book |
-| 📡 **Identify / Scan** | Use identification input such as RFID where required |
-| 📖 **Issue / Return** | Support the library transaction flow |
-| 🚨 **Security** | Provide an interaction path for detecting unauthorized movement |
-
-The exact hardware/peripheral implementation can evolve as the project develops.
+| 🖥️ User Interface | Interactive library kiosk experience |
+| 🔎 Find Book | Search and book-location interaction |
+| 📡 Identification | RFID-based book identification |
+| 📖 Issue Book | Book issuing workflow |
+| ↩️ Return Book | Book return workflow |
+| 💡 Feedback | Visual status and user feedback |
+| 🔐 Security Concept | Identification-based security workflow |
 
 ---
 
-# 🧠 How the System Works
+# 🖥️ User Experience
 
-### 1️⃣ User Interaction
+The interface is designed around a simple principle:
 
-The user interacts with the ESP32-S3-based interface.
+> **The user should not need to understand the electronics to use the library.**
+
+The interaction follows a straightforward flow:
 
 ```text
-        👤 USER
-          │
-          ▼
-   ┌───────────────┐
-   │   ESP32-S3    │
-   │ Interactive UI│
-   └───────┬───────┘
+┌──────────────┐
+│  HOME SCREEN │
+└──────┬───────┘
+       │
+   ┌───┼───────────────┐
+   │   │               │
+   ▼   ▼               ▼
+ FIND ISSUE          RETURN
+ BOOK BOOK            BOOK
+   │   │               │
+   ▼   ▼               ▼
+ BOOK IDENTIFICATION / RFID
            │
-     ┌─────┼─────┐
-     ▼     ▼     ▼
-   Find   Issue Return
-   Book   Book   Book
+           ▼
+      SYSTEM RESPONSE
+           │
+      ┌────┴────┐
+      ▼         ▼
+     ✅         ⚠️
+ SUCCESS       ALERT
 ```
 
-### 2️⃣ Find a Book
+---
 
-A user searches for a book.
+# 🔎 Find Book
 
-The system can present book information and guide the user toward the relevant physical location.
+The **Find Book** functionality is designed around the most common library problem: knowing that a book exists but not immediately knowing where to find it.
+
+The interaction can be represented as:
 
 ```text
-Enter / Select Book
-        ↓
-   Book identified
-        ↓
- Location displayed
-        ↓
- Visual guidance
-        ↓
-   📚 Book found
+User selects / searches for a book
+                ↓
+       System identifies book
+                ↓
+       Book information shown
+                ↓
+       Location / indication
+                ↓
+          📚 Find the book
 ```
 
-### 3️⃣ Issue / Return
+The prototype's visual interface and hardware demonstration are included below.
 
-The transaction flow is designed around identification and confirmation.
+### 📸 Find Book — User Interaction
+
+<p align="center">
+  <img src="photos_circuit/FindBook_demo.png" alt="Find Book Demo" width="680">
+</p>
+
+The screen provides the user with an interface for beginning the book-search process.
+
+### 📸 Book Selection / Location Indication
+
+<p align="center">
+  <img src="photos_circuit/after_selection_of_book.png" alt="After Book Selection" width="680">
+</p>
+
+After selecting a book, the system moves from the search stage toward identifying and indicating the required book.
+
+---
+
+# 📡 RFID / Book Identification
+
+RFID provides a way to identify a physical book electronically.
+
+The basic idea is:
 
 ```text
-Scan / Identify
-      ↓
-Validate
-      ↓
-Confirm user + book
-      ↓
-Complete transaction
-      ↓
-Show result
+📚 Physical Book
+      │
+      ▼
+🏷️ RFID Tag
+      │
+      ▼
+📡 RFID Reader
+      │
+      ▼
+🧠 ESP32-S3
+      │
+      ▼
+System processes identification
 ```
 
-### 4️⃣ Security
+### 📸 RFID Reader
 
-The same identification concept can be extended to monitor books at an exit point.
+<p align="center">
+  <img src="photos_circuit/RFID_scanner.png" alt="RFID Scanner" width="680">
+</p>
+
+The RFID interface is used as the physical identification point for the prototype.
+
+### 📸 Identification / Visual Indication
+
+<p align="center">
+  <img src="photos_circuit/indication_of_book.png" alt="Book Indication" width="680">
+</p>
+
+The prototype combines electronic identification with visible feedback so that the user can understand what the system is doing.
+
+---
+
+# 📖 Issue Book
+
+The issue flow is designed to make a library transaction easy to understand.
+
+```text
+          📖 ISSUE BOOK
+                │
+                ▼
+          Scan / Identify
+                │
+                ▼
+        Validate the book
+                │
+                ▼
+          Confirm action
+                │
+                ▼
+        ┌───────┴───────┐
+        ▼               ▼
+       ✅               ❌
+    ISSUED            FAILED
+```
+
+### 📸 Issue Book Screen
+
+<p align="center">
+  <img src="photos_circuit/issue_book_demo.png" alt="Issue Book Demo" width="680">
+</p>
+
+The interface guides the user to scan the book and continue through the issue process.
+
+### 📸 Successful Issue
+
+<p align="center">
+  <img src="photos_circuit/issue_success.png" alt="Book Issued Successfully" width="680">
+</p>
+
+A dedicated success state gives immediate feedback after a successful issue operation.
+
+---
+
+# ↩️ Return Book
+
+The return process follows a similar interaction pattern.
+
+```text
+        📚 RETURN BOOK
+               │
+               ▼
+        Scan / Identify
+               │
+               ▼
+       Validate the book
+               │
+               ▼
+        Update the state
+               │
+               ▼
+        ✅ Return Success
+```
+
+### 📸 Return Book Screen
+
+<p align="center">
+  <img src="photos_circuit/return_book_demo.png" alt="Return Book Demo" width="680">
+</p>
+
+The return interface provides a dedicated workflow instead of mixing return operations with the search interface.
+
+### 📸 Successful Return
+
+<p align="center">
+  <img src="photos_circuit/return_success.png" alt="Return Success" width="680">
+</p>
+
+The confirmation screen clearly communicates that the operation has completed.
+
+---
+
+# 💡 Visual Feedback
+
+A smart embedded system should not only process an event internally — it should also communicate the result to the user.
+
+The prototype therefore uses visual feedback as part of the interaction.
+
+```text
+             SYSTEM EVENT
+                  │
+        ┌─────────┴─────────┐
+        ▼                   ▼
+      SUCCESS              ALERT
+        │                   │
+        ▼                   ▼
+      🟢 LED              🔴 LED
+        │                   │
+        └─────────┬─────────┘
+                  ▼
+             USER FEEDBACK
+```
+
+### 📸 Hardware / Circuit Demonstration
+
+<p align="center">
+  <img src="photos_circuit/circuit.png" alt="Smart Library Circuit" width="760">
+</p>
+
+The circuit demonstration shows the physical electronics used to create the prototype interaction.
+
+---
+
+# 🔐 Security-Oriented Concept
+
+A library system must also consider what happens when a book moves through a controlled area.
+
+The identification-based security concept follows:
 
 ```text
 Book detected
-     ↓
-Identification
-     ↓
-Check status
-   ↙     ↘
-Valid   Invalid
- ↓         ↓
-Allow    Alert
+      │
+      ▼
+Read identification
+      │
+      ▼
+Check expected state
+      │
+ ┌────┴────┐
+ ▼         ▼
+Valid     Invalid
+ │           │
+ ▼           ▼
+🟢 Normal   🔴 Alert
 ```
 
+### 📸 Security Demonstration
+
+<p align="center">
+  <img src="photos_circuit/anti_theft_alarm.png" alt="Anti Theft Alarm" width="680">
+</p>
+
+The prototype demonstrates the use of visible alert feedback when a security-related condition is detected.
+
 ---
 
-# 🖥️ ESP32-S3-Centric Architecture
+# 🧩 Hardware Architecture
 
-```mermaid
-flowchart TD
-    U[👤 Library User] --> UI[🖥️ ESP32-S3 Interactive Interface]
+The central design decision of this project is:
 
-    UI --> FIND[🔎 Find Book]
-    UI --> ISSUE[📖 Issue Book]
-    UI --> RETURN[↩️ Return Book]
-    UI --> ABOUT[ℹ️ About / Project Info]
+## ⚡ One ESP32-S3 board as the core
 
-    FIND --> LOC[📍 Book Location / Guidance]
-    ISSUE --> ID[📡 Identification & Validation]
-    RETURN --> ID
-    ID --> RESULT[✅ Transaction Result]
+Instead of making separate microcontrollers responsible for different sections of the prototype, our implementation is organized around one ESP32-S3.
 
-    SEC[🚪 Exit / Security Input] --> ID
-    ID --> ALERT[🚨 Security Alert]
+```text
+                    ┌──────────────────────┐
+                    │      ESP32-S3        │
+                    │                      │
+                    │  🖥️ UI              │
+                    │  🧠 Control Logic    │
+                    │  📡 Connectivity     │
+                    │  📚 Library Flow     │
+                    └──────────┬───────────┘
+                               │
+          ┌────────────────────┼────────────────────┐
+          │                    │                    │
+          ▼                    ▼                    ▼
+     📡 RFID               💡 LEDs              🔊 Alert
+   Identification       Visual Feedback       Feedback
 ```
 
-> **Design principle:** Keep the central control logic around the ESP32-S3 and add only the peripherals needed for the required interaction.
+This gives the prototype a compact and easier-to-understand central architecture.
 
 ---
 
-# 🔧 Hardware Direction
+# 🔧 Main Technologies
 
-The redesigned concept is centered on:
-
-### 🧠 Main Controller
-
-- **ESP32-S3**
-- Display/touch interaction where supported by the selected ESP32-S3 hardware
-- GPIO-based peripheral control
-- Wireless connectivity where required by the implementation
-
-### 🔌 Possible Peripherals
-
-Depending on the version of the prototype:
-
-- RFID reader
-- Addressable LEDs
-- Buzzer
-- Push buttons / switches
-- Other sensors required by the experiment
-
-> The goal of this repository is **not to reproduce the multi-board architecture from the reference concept**. It explores an ESP32-S3-centric implementation.
-
----
-
-# 📸 Project Gallery
-
-### 🔎 Find Book
-
-<p align="center">
-  <img src="photos_circuit/FindBook_demo.png" width="48%" alt="Find Book Demo">
-  <img src="photos_circuit/after_selection_of_book.png" width="48%" alt="Book Selected">
-</p>
-
-### 📡 RFID / Identification
-
-<p align="center">
-  <img src="photos_circuit/RFID_scanner.png" width="48%" alt="RFID Scanner">
-  <img src="photos_circuit/indication_of_book.png" width="48%" alt="Book Indication">
-</p>
-
-### 📖 Issue & Return
-
-<p align="center">
-  <img src="photos_circuit/issue_book_demo.png" width="48%" alt="Issue Book">
-  <img src="photos_circuit/issue_success.png" width="48%" alt="Issue Success">
-</p>
-
-<p align="center">
-  <img src="photos_circuit/return_book_demo.png" width="48%" alt="Return Book">
-  <img src="photos_circuit/return_success.png" width="48%" alt="Return Success">
-</p>
-
-### 🚨 Security / Hardware
-
-<p align="center">
-  <img src="photos_circuit/circuit.png" width="48%" alt="Circuit">
-  <img src="photos_circuit/anti_theft_alarm.png" width="48%" alt="Anti Theft Alarm">
-</p>
-
----
-
-# 🛠️ Technology Stack
-
-| Layer | Technology |
+| Category | Technology |
 |---|---|
-| 🧠 Controller | **ESP32-S3** |
-| 💻 Development | **VS Code + PlatformIO** |
-| ⚙️ Firmware | **C/C++** |
-| 🎨 UI | ESP32-S3 display/UI environment used by the prototype |
-| 📡 Connectivity | ESP32-S3 wireless capabilities where required |
-| 📚 Identification | RFID/peripheral interface where implemented |
-| 💡 Feedback | LEDs / display / buzzer where implemented |
-| 🧪 Simulation | Wokwi / PlatformIO-compatible workflow where applicable |
+| 🧠 Main Controller | **ESP32-S3** |
+| 💻 IDE | **Visual Studio Code** |
+| ⚙️ Build System | **PlatformIO** |
+| 💻 Programming | **C/C++** |
+| 📡 Identification | **MFRC522 RFID** |
+| 💡 Visual Feedback | Addressable LED / display feedback |
+| 🖥️ User Interaction | ESP32-S3 display/touch interface |
+| 🧪 Simulation / Development | Wokwi where applicable |
+| 🌐 Communication | ESP32-S3 wireless capabilities where required |
 
 ---
 
-# 📁 Repository Structure
+# 🔌 Prototype Hardware
+
+The exact hardware configuration can evolve with the prototype, but the central board is:
+
+### 🧠 ESP32-S3
+
+The ESP32-S3 is responsible for coordinating the main interaction and connected peripherals.
+
+Other prototype components include interfaces such as:
+
+- MFRC522 RFID reader
+- Addressable LEDs
+- Display/touch interface
+- Buzzer / alert output
+- Power and supporting electronic components
+
+The reference material describes RFID readers, addressable LEDs and other supporting components as part of the broader smart-library problem space. fileciteturn1file0L27-L40
+
+---
+
+# 📂 Repository Structure
 
 ```text
 Smart-Library-Demo/
@@ -307,26 +486,30 @@ Smart-Library-Demo/
 │   └── main.cpp
 │
 ├── 📂 photos_circuit/
-│   ├── circuit.png
 │   ├── FindBook_demo.png
+│   ├── after_selection_of_book.png
 │   ├── RFID_scanner.png
+│   ├── indication_of_book.png
 │   ├── issue_book_demo.png
 │   ├── issue_success.png
 │   ├── return_book_demo.png
 │   ├── return_success.png
+│   ├── anti_theft_alarm.png
+│   ├── circuit.png
 │   └── ...
 │
-├── 📄 diagram.json
-├── 📄 libraries.txt
 ├── 📄 platformio.ini
+├── 📄 diagram.json
 ├── 📄 wokwi.toml
-├── 📄 README.md
-└── 📄 .gitignore
+├── 📄 libraries.txt
+├── 📄 smart-library.code-workspace
+├── 📄 .gitignore
+└── 📄 README.md
 ```
 
 ---
 
-# ⚡ Getting Started
+# 🚀 Getting Started
 
 ## 1. Clone the repository
 
@@ -334,29 +517,27 @@ Smart-Library-Demo/
 git clone https://github.com/hemachandramenni07/Smart-Library-Demo.git
 ```
 
-```bash
-cd Smart-Library-Demo
-```
+## 2. Open the project
 
-## 2. Open in VS Code
+Open the cloned folder in:
 
-Open the project folder in **Visual Studio Code**.
+**Visual Studio Code**
 
-Make sure the **PlatformIO extension** is installed.
+Install the **PlatformIO IDE** extension if it is not already installed.
 
 ## 3. Connect the ESP32-S3
 
-Connect the board through USB and select the correct PlatformIO environment/port for your hardware.
+Connect the ESP32-S3 to your computer through USB.
 
 ## 4. Build
 
-From the PlatformIO interface:
+From PlatformIO:
 
 ```text
 Build
 ```
 
-or use:
+or:
 
 ```bash
 pio run
@@ -364,7 +545,7 @@ pio run
 
 ## 5. Upload
 
-Use PlatformIO:
+Use:
 
 ```text
 Upload
@@ -376,32 +557,34 @@ or:
 pio run --target upload
 ```
 
-> Check `platformio.ini` for the exact board and environment configuration used by this repository.
+> Check `platformio.ini` for the exact board/environment configuration used by the current source.
 
 ---
 
-# 🧪 Development Workflow
+# 👥 Team Collaboration
 
-We are using GitHub as a collaborative workspace.
+This project is maintained as a team repository.
+
+The development model is:
 
 ```text
-                 ┌─────────────┐
-                 │    main     │
-                 │ Stable Code │
-                 └──────┬──────┘
-                        │
-       ┌────────────────┼────────────────┐
-       ↓                ↓                ↓
- feature/esp32     feature/rfid     feature/...
-       │                │                │
-       └────────────────┼────────────────┘
-                        ↓
-                 Pull Request
-                        ↓
-                      main
+                         ┌───────────┐
+                         │   main    │
+                         └─────┬─────┘
+                               │
+              ┌────────────────┼────────────────┐
+              ▼                ▼                ▼
+       feature/esp32     feature/rfid     feature/hardware
+              │                │                │
+              └────────────────┼────────────────┘
+                               ▼
+                        Pull Request
+                               │
+                               ▼
+                             main
 ```
 
-### Create a feature branch
+### Recommended workflow
 
 ```bash
 git checkout main
@@ -409,116 +592,125 @@ git pull origin main
 git checkout -b feature/your-feature
 ```
 
-### Commit your changes
+After making changes:
 
 ```bash
 git add .
-git commit -m "Describe your change"
-```
-
-### Push the branch
-
-```bash
+git commit -m "Describe your changes"
 git push -u origin feature/your-feature
 ```
 
-Then create a **Pull Request** on GitHub.
+Then create a Pull Request on GitHub.
 
 ---
 
-# 👥 Team
+# 👨‍👩‍👧‍👦 Team
 
-| Role | Responsibility |
+| Member | Area |
 |---|---|
-| 👨‍💻 **Hema** | ESP32-S3 integration & project coordination |
-| 👩‍💻 **Nisha** | RFID / identification module |
-| 👩‍💻 **Srujitha** | Hardware / visual guidance experimentation |
-| 👩‍💻 **Yasaswini** | Backend / documentation / integration |
-
-> Responsibilities may evolve as the prototype develops.
+| **Hema** | ESP32-S3 integration & project coordination |
+| **Nisha** | RFID / identification |
+| **Srujitha** | Hardware & visual feedback |
+| **Yasaswini** | Integration / documentation |
 
 ---
 
-# 🌱 Why ESP32-S3?
+# 🏆 Project Status
 
-The ESP32-S3 gives us a useful combination of:
+## ✅ Completed Prototype Demo
 
-- 🧠 capable microcontroller
-- 📡 wireless connectivity
-- 🖥️ display-oriented capabilities
-- 🔌 multiple GPIO interfaces
-- ⚡ compact embedded platform
-- 🧩 support for a wide range of peripherals
-- 🤖 room for future intelligent/AI-assisted features
+This repository represents a **completed and demonstrated Smart Library prototype** built around **one ESP32-S3 board**.
 
-The motivation behind the redesign is to explore how much functionality can be concentrated into a **single capable embedded platform**, rather than beginning with a collection of separate controller boards.
+The prototype has been physically assembled and demonstrated as a proof of concept.
+
+### Demonstrated areas
+
+| Area | Status |
+|---|:---:|
+| 🧠 ESP32-S3 Core | ✅ |
+| 🖥️ Interactive Interface | ✅ |
+| 🔎 Find Book Flow | ✅ |
+| 📡 RFID / Identification | ✅ |
+| 📖 Issue Book Flow | ✅ |
+| ↩️ Return Book Flow | ✅ |
+| 💡 Visual Feedback | ✅ |
+| 🔐 Security-Oriented Demo | ✅ |
+| 🧪 Prototype Demonstration | ✅ |
+
+> **⚡ One Board. One Core. One Smart Library.**
 
 ---
 
-# 🔮 Future Scope
+# 🔮 Future Possibilities
 
-The project can evolve in several directions:
+Although the prototype is complete, the idea can continue to evolve.
+
+Possible future improvements include:
 
 - 🎙️ Voice-assisted book search
-- 🤖 AI-assisted natural-language book search
-- 🗺️ Interactive shelf/map navigation
+- 🤖 Natural-language / AI-assisted search
+- 🗺️ Interactive library map
 - 📱 Mobile companion interface
-- 🔐 Improved RFID-based security
-- 📊 Local inventory analytics
-- 🧠 Smarter book recommendations
-- 🏷️ Better physical book identification
-- 🌐 Optional networked library integration
-- ♻️ Lower-cost and lower-power hardware design
+- 📊 Usage and inventory analytics
+- 🔐 More advanced RFID security
+- 🧠 Intelligent book recommendations
+- 🌐 Optional network-based library integration
+- ⚡ Further hardware simplification
+
+These are **future possibilities**, not claims about the current prototype.
 
 ---
 
-# 📚 Inspiration & Originality
+# 📚 Inspiration & Original Work
 
-This project was **inspired by the smart-library problem and architecture described in a reference article/document**.
+This project was inspired by the smart-library problem described in a reference article/document. The reference discusses book-location difficulties and a broader smart-library workflow involving search, issuing, returning and security. fileciteturn1file0L15-L26
 
-The reference concept explored a larger system involving an ESP32-S3 kiosk, separate shelf controllers, RFID handling and a Raspberry Pi backend. fileciteturn1file0L5-L12
+Our team used that idea as a starting point and developed a different implementation direction:
 
-Our project takes the underlying **problem statement and inspiration** and explores it from our own engineering perspective:
+```text
+REFERENCE PROBLEM
+       ↓
+   OUR IDEATION
+       ↓
+ ESP32-S3-CENTRIC DESIGN
+       ↓
+ HARDWARE + SOFTWARE
+       ↓
+ COMPLETED PROTOTYPE
+```
 
-> **Can a smart-library experience be redesigned around one ESP32-S3 instead of depending on multiple controller boards?**
-
-The project therefore focuses on **re-thinking, simplifying and experimenting**, rather than reproducing the reference implementation.
-
----
-
-# ⚠️ Project Status
-
-🚧 **Prototype / Academic Project**
-
-This repository is an ongoing engineering project. Hardware connections, software architecture and features may change as the team experiments with different implementations.
-
-Some features shown in the project gallery represent the broader smart-library concept and prototype workflow; the exact feature set of the current ESP32-S3-only implementation should be checked against the latest source code.
+The purpose of this repository is to document **our implementation, experiments and engineering decisions**, rather than reproduce the reference system.
 
 ---
 
-# 📜 Reference
+# 🎬 Project Demonstration
 
-The project concept was inspired by a reference smart-library document describing book search, RFID-based issue/return, shelf guidance and security workflows. fileciteturn1file0L15-L26
+Add your final demonstration video here when you publish it:
 
-**Reference concept:** *Find My Book – AI & IoT Smart Library Navigation & Inventory*
+```text
+▶️ Demo Video: [Add YouTube Link]
+```
 
 ---
 
-# ⭐ If you find this project interesting
-
-Give the repository a ⭐ and follow the development as we continue experimenting with an **ESP32-S3-first Smart Library**.
+# ⭐ Project Highlights
 
 <p align="center">
 
-### 📚 Search smarter.  
-### 💡 Navigate easier.  
-### ⚡ Build smaller.  
-### 🧠 Think beyond the reference.
+| 🔎 Smart Search | 📡 RFID | 📖 Transactions | ⚡ ESP32-S3 |
+|:---:|:---:|:---:|:---:|
+| Find books | Identify books | Issue / Return | Single-board core |
 
 </p>
 
 ---
 
 <p align="center">
-  <b>Built with curiosity, embedded systems, and a lot of debugging. 🚀</b>
+
+## 📚 Making the library easier to navigate.
+
+### ⚡ Built around one ESP32-S3.
+
+**Designed • Built • Tested • Demonstrated**
+
 </p>
